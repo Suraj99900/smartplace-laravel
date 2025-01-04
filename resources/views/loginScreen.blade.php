@@ -96,7 +96,7 @@
 <!-- manu toggler end -->
 
 <!-- include footer section -->
-@include('CDN_footer')
+@include('CDN_Footer')
 
 <script>
     var ABS_URL = '{{ env('ABS_URL') }}';
