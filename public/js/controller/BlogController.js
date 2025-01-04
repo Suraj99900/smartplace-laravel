@@ -25,7 +25,7 @@ $(document).ready(() => {
                 if (response.status === 'success') {
                     responsePop('Success', response.message, 'success', 'ok');
                     setTimeout(() => {
-                        window.location.href = "../view/BlogManage.php?iActive=3";
+                        window.location.href = "/BlogManage";
                     }, 500);
                 } else {
                     responsePop('Error', response.message, 'error', 'ok');
