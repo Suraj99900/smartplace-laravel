@@ -7,6 +7,9 @@ $(document).ready(() => {
         ajax: {
             url: API_URL + '/folders', // Replace with your API endpoint for fetching students
             dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             data: function (params) {
                 var query = {
                     search: params.term
@@ -33,10 +36,14 @@ $(document).ready(() => {
         var folderName = $('#subFolderId').val();
         var userName = $('#userId').val();
         var masterFolder = $('#masterFolderId').val();
-
+        console.log($('#csrfid').val());
+        
         $.ajax({
             url: `${API_URL}/subfolders`,
             method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             data: {
                 sub_folder: folderName,
                 user_name: userName,

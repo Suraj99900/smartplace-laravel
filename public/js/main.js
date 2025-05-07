@@ -1,5 +1,9 @@
 // Main API URL
-var API_URL = "'http://localhost/project/Game-Collection-App";
+var API_URL = "https://freecode.fun";
+
+$('#logoutId').on('click',()=>{
+    logoutSessions();
+});
 
 // =============== types
 const typed = document.querySelector(".typing");
@@ -310,9 +314,7 @@ function responsePop(title = '', message = '', icon = '', confirmButtonText = ''
     });
 }
 
-$('#logoutId').on('click',()=>{
-    logoutSessions();
-});
+
 
 function logoutSessions() {
     $.ajax({

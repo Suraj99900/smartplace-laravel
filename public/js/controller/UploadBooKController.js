@@ -2,28 +2,30 @@
 
 // Function to handle the file upload
 function uploadFile() {
-    const sName = $("#fileNameId").val();
-    const iSubFolder = $("#SubFolderId").val();
-    const sFileDescription = $("#FileDcriptionId").val();
-    const fileInput = $('#FileId')[0];
+    const sBookName = $("#bookNameId").val();
+    const sBookISBN = $("#bookISBNId").val();
+    const iSemester = $("#semesterId").val();
+    const sBookDescription = $("#bookDescriptionId").val();
+    const fileInput = $('#bookFileId')[0];
     const UserName = $('#userId').val();
 
     // Create a FormData object
     const formData = new FormData();
-    formData.append('name', sName);
-    formData.append('sub_folder_id', iSubFolder);
-    formData.append('description', sFileDescription);
+    formData.append('name', sBookName);
+    formData.append('isbn', sBookISBN);
+    formData.append('semester', iSemester);
+    formData.append('description', sBookDescription);
     formData.append('file', fileInput.files[0]);
-    formData.append('file_type', 5);
+    formData.append('file_type', 1);
     formData.append('user_name', UserName);
 
     // Make an AJAX request using FormData
     $.ajax({
-        url: `${API_URL}/upload-data`,
+        url: `${API_URL}/upload`,
+        method: "POST",
         headers: {
             'X-CSRF-TOKEN': $('#csrfid').val()
         },
-        method: "POST",
         data: formData,
         contentType: false, // Required for FormData
         processData: false, // Required for FormData
@@ -50,35 +52,35 @@ function handleUploadError(data) {
 }
 
 // Attach the click event handler to the button
-$("#uploadClassRoomId").click(uploadFile);
+$("#idUploadBook").click(uploadFile);
 
 
 $(document).ready(function () {
-    var SubFileId = $("#SubFolderId");
+    var semesterId = $("#semesterId");
 
     $.ajax({
-        url: `${API_URL}/subfolders`,
+        url: `${API_URL}/semester`,
         type: 'GET',
         headers: {
             'X-CSRF-TOKEN': $('#csrfid').val()
         },
         success: function (response) {
-            var aData = response.data; // Assuming response is an array of File data
+            var aData = response.data; // Assuming response is an array of semester data
 
             // Clear existing options
-            SubFileId.empty();
+            semesterId.empty();
 
             // Add default option
-            SubFileId.append($('<option>', {
+            semesterId.append($('<option>', {
                 value: '',
                 text: 'Select Any'
             }));
 
-            // Add File options
-            $.each(aData, function (index, subFolder) {
-                SubFileId.append($('<option>', {
-                    value: subFolder.id, // Adjust the property based on your response structure
-                    text: subFolder.sub_folder // Adjust the property based on your response structure
+            // Add semester options
+            $.each(aData, function (index, semester) {
+                semesterId.append($('<option>', {
+                    value: semester.id, // Adjust the property based on your response structure
+                    text: semester.semester // Adjust the property based on your response structure
                 }));
             });
 

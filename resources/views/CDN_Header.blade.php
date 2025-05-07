@@ -69,3 +69,4 @@
 
 <body class="dark">
 <canvas id="particles"></canvas>
+<input type="hidden" name="_token" id="csrfid" value="{{ csrf_token() }}" />

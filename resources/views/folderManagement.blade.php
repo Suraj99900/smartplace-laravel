@@ -1,16 +1,10 @@
-<?php
-// include header section of template
-include_once "./CDN_Header.php";
-include_once "./leftBar.php";
-include_once "../session.php";
+@include('CDN_Header')
+@include('NavBar')
 
-$bIsLogin = $_SESSION['is_login'] ? $_SESSION['is_login'] : false;
-if (!$bIsLogin) {
-    header("Location: loginScreen.php?staffAccess=1", true, 301);
-    exit;
-}
-?>
+@php
+    $sessionManager = new \App\Models\SessionManager();
 
+@endphp
 
 
 <!-- main Content start -->
@@ -22,12 +16,6 @@ if (!$bIsLogin) {
     <!-- home section start -->
     <section class="upload section " id="upload">
 
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb pt-4">
-                <li class="breadcrumb-item"><a href="Dashboard.php"> Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Folder Management</li>
-            </ol>
-        </nav>
         <div class="container">
 
             <!-- upload Section form  start-->
@@ -37,19 +25,22 @@ if (!$bIsLogin) {
                 </div>
             </div>
 
-            <div class="Folder-section shadow p-3 mb-5 bg-body rounded flex">
+            <div class="Folder-section shadow p-3 mb-5 rounded flex" data-bs-theme="dark">
                 <!-- Button trigger modal -->
 
                 <div class="row align-items-center p-3">
                     <div class="col-sm-12 col-md-6 col-lg-6">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#idSubFolder" id="Subfolder"><i class="fa-solid fa-plus"></i> Create Sub Folder</button>
+                        <button type="button" class="btnWAN" data-bs-toggle="modal" data-bs-target="#idSubFolder"
+                            id="Subfolder"><i class="fa-solid fa-plus"></i> Create Sub Folder</button>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6 " style="display: flex; justify-content: right; align-items: flex-end; ">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#idAddFolderMaster" id="AddFolderMaster"><i class="fa-solid fa-plus"></i> Create Master Folder</button>
+                    <div class="col-sm-12 col-md-6 col-lg-6 "
+                        style="display: flex; justify-content: right; align-items: flex-end; ">
+                        <button type="button" class="btnWAN" data-bs-toggle="modal" data-bs-target="#idAddFolderMaster"
+                            id="AddFolderMaster"><i class="fa-solid fa-plus"></i> Create Master Folder</button>
                     </div>
                 </div>
-                <div class="row p-2">
-                    <table id="idFolderManagement" class="table table-striped" style="width:100%">
+                <div class="row p-2" data-bs-theme="dark">
+                    <table id="idFolderManagement" class="table table-striped" style="width:100%" data-bs-theme="dark">
                         <thead>
                             <tr>
                                 <th>Sr No</th>
@@ -76,7 +67,7 @@ if (!$bIsLogin) {
 <!-- Add Modal Box -->
 
 <!-- Modal -->
-<div class="modal fade" id="idAddFolderMaster" tabindex="-1" aria-labelledby="FolderMasterLabel" aria-hidden="true">
+<div class="modal fade" id="idAddFolderMaster" tabindex="-1" aria-labelledby="FolderMasterLabel" aria-hidden="true" data-bs-theme="dark">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -87,21 +78,23 @@ if (!$bIsLogin) {
                 <div class="row align-items-center p-3">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <label class="form-label"><i class="fa-regular fa-folder"></i> Folder Name</label>
-                        <input type="text" class="form-control custom-control" id="folderId" name="folder_name" placeholder="Enter folder name">
-                        <input type="hidden" class="form-control custom-control" id="userId" name="user_name" value="<?php echo $_SESSION['username'] ?>">
+                        <input type="text" class="form-control custom-control" id="folderId" name="folder_name"
+                            placeholder="Enter folder name">
+                        <input type="hidden" class="form-control custom-control" id="userId" name="user_name"
+                            value="{{ $sessionManager->sUserName }}">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="idCreate">Create</button>
+                <button type="button" class="btnWAN btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btnWAN btn-primary" id="idCreate">Create</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--!Add Sub folder  -->
-<div class="modal fade" id="idSubFolder" tabindex="-1" aria-labelledby="SubFolderLabel" aria-hidden="true">
+<div class="modal fade" id="idSubFolder" tabindex="-1" aria-labelledby="SubFolderLabel" aria-hidden="true" data-bs-theme="dark">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -112,8 +105,10 @@ if (!$bIsLogin) {
                 <div class="row align-items-center p-3">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <label class="form-label"><i class="fa-solid fa-folder-tree"></i> Sub Folder Name</label>
-                        <input type="text" class="form-control custom-control" id="subFolderId" name="folder_name" placeholder="Enter folder name">
-                        <input type="hidden" class="form-control custom-control" id="userId" name="user_name" value="<?php echo $_SESSION['username'] ?>">
+                        <input type="text" class="form-control custom-control" id="subFolderId" name="folder_name"
+                            placeholder="Enter folder name">
+                        <input type="hidden" class="form-control custom-control" id="userId" name="user_name"
+                            value="{{ $sessionManager->sUserName }}">
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <label class="form-label"><i class="fa-solid fa-folder"></i> Folder Name</label>
@@ -123,8 +118,8 @@ if (!$bIsLogin) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="idSubmitSubFolder" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btnWAN btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="idSubmitSubFolder" class="btnWAN btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -132,7 +127,7 @@ if (!$bIsLogin) {
 
 
 <!-- view modal -->
-<div class="modal fade" id="idviewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+<div class="modal fade" id="idviewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true" data-bs-theme="dark">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -155,7 +150,7 @@ if (!$bIsLogin) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btnWAN btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -163,42 +158,11 @@ if (!$bIsLogin) {
 
 <!-- main Content end-->
 
-<!-- style switcher start -->
-<div class="style-switcher hide">
-    <div class="style-switcher hide-toggler s-icon">
-        <i class="fas fa-cog fa-spin"></i>
-    </div>
-    <div class="day-night s-icon">
-        <i class="fas "></i>
-    </div>
-    <h4>Theme Color</h4>
-    <div class="colors">
-        <span class="color-1" onclick="setActivityStyle('color-1')"></span>
-        <span class="color-2" onclick="setActivityStyle('color-2')"></span>
-        <span class="color-3" onclick="setActivityStyle('color-3')"></span>
-        <span class="color-4" onclick="setActivityStyle('color-4')"></span>
-        <span class="color-5" onclick="setActivityStyle('color-5')"></span>
-    </div>
-</div>
-
-<!-- style switcher end -->
-
-<!-- manu toggler start -->
-
-<div class="toggler-box">
-    <div class="toggler-open icon">
-        <i class="uil uil-angle-right-b"></i>
-    </div>
-    <div class="toggler-close icon">
-        <i class="uil uil-angle-left-b"></i>
-    </div>
-</div>
 
 <!-- manu toggler end -->
 
 <!-- include footer section -->
-<?php
-include_once "./CDN_Footer.php";
-?>
-<script src="../controller/folderManagementController.js"></script>
-<script src="../controller/subFolderController.js"></script>
+
+@include('CDN_Footer')
+<script src="{{asset('js/controller/folderManagementController.js')}}"></script>
+<script src="{{asset('js/controller/subFolderController.js')}}"></script>

@@ -38,6 +38,12 @@
                                 <h5>Blog</h5>
                             </a>
                         </li>
+                        <li>
+                            <a href="folderManagement" class="transparent-card p-3 mb-5 rounded"><i
+                                    class="fa-solid fa-blog"></i>
+                                <h5>Folder Management</h5>
+                            </a>
+                        </li>
 
                     </ul>
                 </aside>

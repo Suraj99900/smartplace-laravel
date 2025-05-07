@@ -3,6 +3,9 @@ function dataTableInitialization() {
         ajax: {
             url: `${API_URL}/folders`,
             type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             dataType: 'json',
             data: function (d) {
                 d.show = d.length;
@@ -60,10 +63,14 @@ $(document).ready(function () {
     $('#idCreate').on('click', function () {
         var folderName = $('#folderId').val();
         var userName = $('#userId').val();
+        
 
         $.ajax({
             url: `${API_URL}/folders`,
             method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             data: {
                 folder_name: folderName,
                 user_name: userName
@@ -96,6 +103,9 @@ $(document).ready(function () {
         $.ajax({
             url: `${API_URL}/folders/${folderId}/freeze`,
             method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             data: {
                 status: status
             },
@@ -122,6 +132,9 @@ $(document).ready(function () {
         $.ajax({
             url: `${API_URL}/folders/${folderId}`,
             method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             data: {
                 delete: deleteFlag
             },
@@ -147,6 +160,9 @@ $(document).ready(function () {
         $.ajax({
             url: `${API_URL}/subfolders/${folderId}`,
             method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             success: function (response) {
                 alert(response.message);
                 $('#idviewModal').modal('hide');
@@ -165,6 +181,9 @@ $(document).ready(function () {
         $.ajax({
             url: `${API_URL}/subfolders/master/${masterFolderId}`,
             method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('#csrfid').val()
+            },
             success: function (data) {
                 var aData = data.data;
                 $('#idviewModal').modal('show');

@@ -1,22 +1,15 @@
-<?php
-// include header section of template
-include_once "./CDN_Header.php";
-include_once "./leftBar.php";
-?>
+@include('CDN_Header')
+@include('NavBar')
 
+@php
+    $sessionManager = new \App\Models\SessionManager();
+
+@endphp
 
 
 <!-- main Content start -->
 <div class="main-content">
     <section class="upload-Note section">
-
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb pt-4">
-                <li class="breadcrumb-item"><a href="Dashboard.php"> Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="uploadScreen.php?iActive=2&staffAccess=1">Upload Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Upload Notes</li>
-            </ol>
-        </nav>
 
         <div class="container">
 
@@ -28,13 +21,13 @@ include_once "./leftBar.php";
             </div>
             <!-- upload Note section end -->
 
-            <div class="shadow-lg p-sm-1 p-md-2 p-lg-5 mb-lg-5 mb-md-5 mb-sm-2 bg-body rounded">
+            <div class="p-sm-1 p-md-2 p-lg-5 mb-lg-5 mb-md-5 mb-sm-2 bg-body rounded" data-bs-theme="dark">
                 <form>
                     <div class="row align-items-center p-3">
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <label for="noteName" class="form-label"><i class="fa-solid fa-signature"></i> Note Name</label>
                             <input type="text" class="form-control custom-control" id="NoteNameId" name="Notename" placeholder="Enter Note Name">
-                            <input type="hidden" class="form-control custom-control" id="userId" name="user" value="<?php echo $_SESSION['username'] ?>">
+                            <input type="hidden" class="form-control custom-control" id="userId" name="user" value="{{ $sessionManager->sUserName }}">
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <label for="noteRelatedToSubject" class="form-label"><i class="fa-solid fa-hashtag"></i> Related To Subject</label>
@@ -65,55 +58,15 @@ include_once "./leftBar.php";
             </div>
         </div>
 
-
-
     </section>
 
     <!-- Note search form  end-->
-
-
 </div>
 <!-- main Content end-->
 
 
-<!-- style switcher start -->
-<div class="style-switcher hide">
-    <div class="style-switcher hide-toggler s-icon">
-        <i class="fas fa-cog fa-spin"></i>
-    </div>
-    <div class="day-night s-icon">
-        <i class="fas "></i>
-    </div>
-    <h4>Theme Color</h4>
-    <div class="colors">
-        <span class="color-1" onclick="setActivityStyle('color-1')"></span>
-        <span class="color-2" onclick="setActivityStyle('color-2')"></span>
-        <span class="color-3" onclick="setActivityStyle('color-3')"></span>
-        <span class="color-4" onclick="setActivityStyle('color-4')"></span>
-        <span class="color-5" onclick="setActivityStyle('color-5')"></span>
-    </div>
-</div>
-
-<!-- style switcher end -->
-
-<!-- manu toggler start -->
-
-<div class="toggler-box">
-    <div class="toggler-open icon">
-        <i class="uil uil-angle-right-b"></i>
-    </div>
-    <div class="toggler-close icon">
-        <i class="uil uil-angle-left-b"></i>
-    </div>
-</div>
-
-<!-- manu toggler end -->
-
 
 <!-- include footer section -->
 
-<?php
-include_once "./CDN_Footer.php";
-?>
-
-<script src="../controller/UploadNoteController.js"></script>
+@include('CDN_Footer')
+<script src="{{asset('js/controller/UploadNoteController.js')}}"></script>

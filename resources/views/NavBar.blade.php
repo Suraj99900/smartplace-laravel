@@ -46,6 +46,12 @@
                                 </a>
                             </li>
                             <li class="nav-item mx-3">
+                                <a href="{{ url('classRoom') }}"
+                                   class="nav-link bar-link {{ $iActive == 6 ? 'active' : '' }}">
+                                    <i class="fa fa-book mx-2"></i>Class Room
+                                </a>
+                            </li>
+                            <li class="nav-item mx-3">
                                 <a href="{{ url('renderBlog') }}"
                                    class="nav-link bar-link {{ $iActive == 4 ? 'active' : '' }}">
                                     <i class="fa fa-blog mx-2"></i>Blog
@@ -66,7 +72,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item mx-3">
-                                    <a id="logoutId" class="btnWAN btn-sm nav-link mx-3">Log Out</a>
+                                    <a id="logoutId" onclick="logoutSessions()" class="btnWAN btn-sm nav-link mx-3">Log Out</a>
                                 </li>
                             @else
                                 <li class="nav-item mx-3">

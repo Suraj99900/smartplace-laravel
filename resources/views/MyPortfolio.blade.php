@@ -1,6 +1,9 @@
 @include('CDN_Header')
 @include('NavBar')
+@php
+    $sessionManager = new \App\Models\SessionManager();
 
+@endphp
 
 <style>
     .blog-section .card-body img {
@@ -32,25 +35,33 @@
 
     <section class="home section px-lg-5" id="home">
         <div class="container-fluid home padd-15">
-            <div class="row px-lg-5">
+            <div class="row align-items-center px-lg-5">
                 <div class="home-info base-color col-md-4 px-5">
-                    <h3 class="hello user-name">
-                        Hello, I'm <span class="name">Suraj Jaiswal</span>
-                    </h3>
-                    <h3 class="my-profession">
-                        <span class="typing">Experienced Full Stack Developer</span>
-                    </h3>
-                    <p class="" style="max-width: 800px; text-align: justify;">
-                        I am a highly skilled and adaptable full-stack developer and web designer with over two years of
-                        hands-on experience in building impactful digital solutions. My expertise spans modern web
-                        technologies, graphic and UI/UX design, mobile app development, and robust software solutions.
-                        With deep proficiency in PHP, the Lumen framework, and multiple programming languages, I bring a
-                        comprehensive approach to development. I am also well-versed in Android development, delivering
-                        responsive and engaging applications tailored to client needs.
+                    @if ($sessionManager->isLoggedIn())
+                        <h3 class="hello user-name">
+                            Welcome back, {{ $sessionManager->sUserName }}!
+                        </h3>
+                    @else
+                        <h3 class="hello user-name">
+                            Welcome to FreeCode.Fun!
+                        </h3>
+                    @endif
+
+                    <p class="mt-3" style="max-width: 800px;">
+                        FreeCode.Fun is your go-to platform for <strong>free code snippets</strong>, <strong>tech
+                            videos</strong>, <strong>study materials</strong>, and <strong>AI-focused blogs</strong>.
+                        Our mission is to empower students and developers with zero-cost resources to learn, build, and
+                        innovate.
                     </p>
-                    <a href="#contact" class="btn hire-me">Get In Touch</a>
+                    <div class="mt-4">
+                        <a href="LMS-Dashboard" class="btn hire-me">Explore Features</a>
 
-
+                        @if ($sessionManager->isLoggedIn())
+                            <a href="{{ url(path: 'userDashboard') }}" class="btn hire-me ms-2">Go to Dashboard</a>
+                        @else
+                            <a href="{{ url('loginScreen') }}" class="btn hire-me ms-2">Login / Register</a>
+                        @endif
+                    </div>
                 </div>
                 <div class="home-img col-md-8 padd-15">
                     <!-- <img src="../res/img/DashboardNewImage-transparent.png"> -->
@@ -130,204 +141,6 @@
         </div>
     </section>
     <!-- Blog section end -->
-
-
-    <!-- About section start -->
-    <section class="about section pt-5 pb-5 px-lg-5" id="about">
-        <!-- <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb pt-4">
-                <li class="breadcrumb-item"><a href="MyPortfolio.php"> Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">About</li>
-            </ol>
-        </nav> -->
-
-        <div class="container-fluid">
-            <div class="row px-5 p-lg-5 p-md-5 p-sm-3">
-                <div class="section-title padd-15 mt-5">
-                    <h2>About me</h2>
-                </div>
-            </div>
-            <div class="about-content padd-15 px-5" data-bs-theme="dark">
-                <div class="row px-lg-5">
-                    <div class="about-text">
-                        <h3>My name is Suraj Jaiswal and I am a <span>Full Stack Developer</span></h3>
-                        <p>I am a versatile web designer and full-stack developer with over a year of extensive
-                            experience. My expertise encompasses website design, graphic design, and much more.
-                            Additionally, I possess strong knowledge in web technologies, mobile app development, and
-                            software development, backed by 2 years of hands-on experience in PHP. </p>
-                        <p>I am passionate about creating visually stunning and highly functional digital experiences
-                            tailored to meet the unique needs of each client. Whether you are looking to revamp your
-                            existing website, develop a new mobile application, or require comprehensive software
-                            solutions, I am here to help bring your vision to life.</p>
-                    </div>
-                </div>
-                <div class="row px-lg-5">
-                    <div class="personal-info padd-15">
-                        <div class="row">
-                            <div class="info-item padd-15">
-                                <p>Birthday: <span>14 april 2003</span></p>
-                            </div>
-
-                            <div class="info-item padd-15">
-                                <p>Age: <span>21</span></p>
-                            </div>
-
-                            <div class="info-item padd-15">
-                                <p>Website: <span>www.samrtpolys.com</span></p>
-                            </div>
-
-                            <div class="info-item padd-15">
-                                <p>Email: <span>Jaiswaljesus384@gmail.com</span></p>
-                            </div>
-
-                            <div class="info-item padd-15">
-                                <p>Diploma: <span>Computer Science & Engineering</span></p>
-                            </div>
-                            <div class="info-item padd-15">
-                                <p>Phone: <span>+91 738-799-7294</span></p>
-                            </div>
-
-                            <div class="info-item padd-15">
-                                <p>City: <span>Pune, maharashtra</span></p>
-                            </div>
-
-
-                        </div>
-
-                        <div class="row">
-                            <div class="buttons padd-15">
-                                <a href="https://internshala.com/download/resume" target="_blank" class="btn">Download
-                                    CV</a>
-                                <a href="MyPortfolio.php#contact" class="btn">Contact Me</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skills padd-15">
-                        <div class="row">
-                            <div class="skill-item padd-15">
-                                <h5>Web Development</h5>
-                                <div class="progress">
-                                    <div class="progress-in" style="width: 90%;"></div>
-                                    <div class="skill-percent">90%</div>
-                                </div>
-                            </div>
-
-                            <div class="skill-item padd-15">
-                                <h5>Mobile App Development</h5>
-                                <div class="progress">
-                                    <div class="progress-in" style="width: 50%;"></div>
-                                    <div class="skill-percent">50%</div>
-                                </div>
-                            </div>
-
-                            <div class="skill-item padd-15">
-                                <h5>Data Visualization</h5>
-                                <div class="progress">
-                                    <div class="progress-in" style="width: 50%;"></div>
-                                    <div class="skill-percent">50%</div>
-                                </div>
-                            </div>
-
-                            <div class="skill-item padd-15">
-                                <h5>Rest API Development</h5>
-                                <div class="progress">
-                                    <div class="progress-in" style="width: 80%;"></div>
-                                    <div class="skill-percent">80%</div>
-                                </div>
-                            </div>
-
-                            <div class="skill-item padd-15">
-                                <h5>Page Design</h5>
-                                <div class="progress">
-                                    <div class="progress-in" style="width: 76%;"></div>
-                                    <div class="skill-percent">76%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row px-lg-5">
-                    <div class="education padd-15">
-                        <h3 class="title">Education</h3>
-                        <div class="row">
-                            <div class="timline-box padd-15">
-                                <div class="timeline shadow-dark">
-                                    <!-- Timeline item -->
-                                    <div class="timeline-item">
-                                        <div class="circle-dot"></div>
-                                        <h3 class="timeline-date">
-                                            <i class="fa fa-calendar"></i> 2023 - 2027
-                                        </h3>
-                                        <h4 class="timeline-title">
-                                            Zeal College of Engineering & Research, Pune
-                                        </h4>
-                                        <p class="timeline-text">
-                                            Bachelor of Engineering - BE, Artificial Intelligence and data science.
-                                        </p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <div class="circle-dot"></div>
-                                        <h3 class="timeline-date">
-                                            <i class="fa fa-calendar"></i> 2019 - 2022
-                                        </h3>
-                                        <h4 class="timeline-title">
-                                            Diploma in computer science
-                                        </h4>
-                                        <p class="timeline-text">
-                                            Maharashtra State Board of Technical Education (MSBTE)
-                                            Diploma of Education, Computer science
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="experience padd-15">
-                        <h3 class="title">
-                            Experience
-                        </h3>
-
-                        <div class="row px-lg-5">
-                            <div class="timline-box padd-15">
-                                <div class="timeline shadow-dark">
-                                    <!-- Timeline item -->
-                                    <div class="timeline-item">
-                                        <div class="circle-dot"></div>
-                                        <h3 class="timeline-date">
-                                            <i class="fa fa-calendar"></i> November 2022 - Present
-                                        </h3>
-                                        <h4 class="timeline-title">
-                                            Plus91 Technologies Pvt. Ltd.
-                                        </h4>
-                                        <p class="timeline-text">
-                                            PHP Developer.
-                                        </p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <div class="circle-dot"></div>
-                                        <h3 class="timeline-date">
-                                            <i class="fa fa-calendar"></i> August 2022 - November 2022
-                                        </h3>
-                                        <h4 class="timeline-title">
-                                            Hashtag Systems Inc
-                                        </h4>
-                                        <p class="timeline-text">
-                                            Intern
-                                            August 2022 - November 2022 (4 months)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- About section end -->
 
 
 
@@ -697,7 +510,7 @@
             },
             processResults: function (data) {
                 console.log(data);
-                
+
                 if (data.status_code === 200) {
                     return {
                         results: data.data.map(function (item) {

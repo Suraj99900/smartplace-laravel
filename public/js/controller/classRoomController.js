@@ -22,107 +22,115 @@ $(document).ready(() => {
 
 function fetchFolder(search = '') {
     $('#idMasterFolder').empty();
+
     $.ajax({
         url: `${API_URL}/folders`,
-        type: 'GET',
-        data: {
-            'search': search,
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
         },
+        type: 'GET',
+        data: { search },
         success: function (response) {
-            var aData = response.data; // Assuming response is an array of semester data
-            if (aData.length > 0) {
-                $.each(aData, function (index, folder) {
-                    // Assuming folderName is a property of each folder
+            const aData = response.data;
+
+            if (Array.isArray(aData) && aData.length > 0) {
+                aData.forEach((folder, index) => {
                     if (folder.status == 1) {
-                        var folderName = folder.folder_name;
+                        const folderName = folder.folder_name;
+                        const folderId = 'folder_' + index;
+                        const encodedName = encodeURIComponent(folderName);
 
-                        // Generate a unique id for each folder
-                        var folderId = 'folder_' + index;
-
-                        // Append a folder icon with improved style, id, and a link to idMasterFolder div for each folder
-                        $('#idMasterFolder').append(
-                            '<div class="col-lg-3 col-md-4 col-sm-12 folder">' +
-                            '<div class="folder-card" id="' + folderId + '">' +
-                            '<a href="subFolder.php?masterFolderId=' + folder.id + '&masterFolderName=' + folderName + '&iActive=6" class="folder-link">' +
-                            '<div class="folder-icon">' +
-                            '<i class="fa-solid fa-folder-open"></i>' + // You can use an appropriate icon class
-                            '</div>' +
-                            '<p class="folder-name">' + folderName + '</p>' +
-                            '</a>' +
-                            '</div>' +
-                            '</div>'
-                        );
+                        $('#idMasterFolder').append(`
+                            <div class="col-lg-3 col-md-4 col-sm-12 folder">
+                                <div class="folder-card" id="${folderId}">
+                                    <a href="/subFolder/${folder.id}/${encodedName}" class="folder-link">
+                                        <div class="folder-icon">
+                                            <i class="fa-solid fa-folder-open"></i>
+                                        </div>
+                                        <p class="folder-name">${folderName}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        `);
                     }
                 });
             } else {
-                $('#idMasterFolder').append(
-                    '<div class="col-lg-12 col-md-12 col-sm-12 folder">' +
-                    '<h3 class="error-msg">No folder found</h3>' +
-                    '</div>'
-                );
+                $('#idMasterFolder').append(`
+                    <div class="col-lg-12 col-md-12 col-sm-12 folder">
+                        <h3 class="error-msg">No folder found</h3>
+                    </div>
+                `);
             }
-
         },
-        error: function (xhr, status, error) {
-            // Handle errors here
-            console.log(xhr.responseText);
+        error: function (xhr) {
+            console.error("Error fetching folders:", xhr.responseText);
+            $('#idMasterFolder').append(`
+                <div class="col-lg-12 col-md-12 col-sm-12 folder">
+                    <h3 class="error-msg text-danger">Failed to fetch folders. Please try again later.</h3>
+                </div>
+            `);
         }
     });
 }
 
+
 function fetchSubFolder(id, search = '') {
     $('#idsubFolder').empty();
+
     $.ajax({
-        url: `${API_URL}/subfolders/master/` + id,
+        url: `${API_URL}/subfolders/master/${id}`,
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
+        },
         type: 'GET',
         data: {
             'search': search,
         },
         success: function (response) {
-            var aData = response.data; // Assuming response is an array of semester data
-            if (aData.length > 0) {
-                $.each(aData, function (index, folder) {
-                    // Assuming folderName is a property of each folder
-                    var folderName = folder.sub_folder;
+            const aData = response.data;
 
-                    // Generate a unique id for each folder
-                    var folderId = 'folder_' + index;
+            if (Array.isArray(aData) && aData.length > 0) {
+                aData.forEach((folder, index) => {
+                    const folderName = folder.sub_folder || 'Untitled';
+                    const encodedFolderName = encodeURIComponent(folderName); // Safe for URL
+                    const folderId = `folder_${index}`;
 
-                    // Append a folder icon with improved style, id, and a link to idsubFolder div for each folder
-                    $('#idsubFolder').append(
-                        '<div class="col-lg-3 col-md-4 col-sm-12 folder">' +
-                        '<div class="folder-card" id="' + folderId + '">' +
-                        '<a href="classRoomData.php?SubFolderId=' + folder.id + '&SubFolderName=' + folderName + '&iActive=6" class="folder-link">' +
-                        '<div class="folder-icon">' +
-                        '<i class="fa-solid fa-folder-open"></i>' + // You can use an appropriate icon class
-                        '</div>' +
-                        '<p class="folder-name">' + folderName + '</p>' +
-                        '</a>' +
-                        '</div>' +
-                        '</div>'
-                    );
+                    $('#idsubFolder').append(`
+                        <div class="col-lg-3 col-md-4 col-sm-12 folder">
+                            <div class="folder-card" id="${folderId}">
+                                <a href="/classRoomData/${folder.id}/${encodedFolderName}" class="folder-link">
+                                    <div class="folder-icon">
+                                        <i class="fa-solid fa-folder-open"></i>
+                                    </div>
+                                    <p class="folder-name">${folderName}</p>
+                                </a>
+                            </div>
+                        </div>
+                    `);
                 });
             } else {
-                $('#idsubFolder').append(
-                    '<div class="col-lg-12 col-md-12 col-sm-12 folder">' +
-                    '<h3 class="error-msg">No folder found</h3>' +
-                    '</div>'
-                );
+                $('#idsubFolder').append(`
+                    <div class="col-lg-12 col-md-12 col-sm-12 folder">
+                        <h3 class="error-msg">No folder found</h3>
+                    </div>
+                `);
             }
-
         },
         error: function (xhr, status, error) {
-            // Handle errors here
             console.log(xhr.responseText);
         }
     });
 }
+
 
 
 function fetchFolderData(id, search = '') {
     $('#idFolderData').empty();
     $.ajax({
         url: `${API_URL}/upload-data`,
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
+        },
         type: 'GET',
         data: {
             'search': search,
@@ -183,6 +191,9 @@ function downloadFile(url, index) {
     // Make an AJAX request to download the file
     $.ajax({
         url: `${API_URL}/download-file`,
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
+        },
         method: 'POST',
         data: { url: url },
         xhrFields: {

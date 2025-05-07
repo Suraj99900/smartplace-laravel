@@ -25,6 +25,9 @@ function uploadFile() {
     $.ajax({
         url: `${API_URL}/upload`,
         method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
+        },
         data: formData,
         contentType: false, // Required for FormData
         processData: false, // Required for FormData
@@ -39,7 +42,7 @@ function handleUploadSuccess(data) {
         // Registration was successful
         alert(data.message);
         // Redirect to another page (example)
-        window.location.href = "uploadScreen.php?staffAccess=1";
+        window.location.href = "uploadScreen";
     }
 }
 
@@ -60,6 +63,9 @@ $(document).ready(function () {
     $.ajax({
         url: `${API_URL}/semester`,
         type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('#csrfid').val()
+        },
         success: function (response) {
             var aData = response.data; // Assuming response is an array of semester data
 

@@ -31,7 +31,7 @@
                             
                         </div>
 
-                        <div class="col-2"><a class="btnWAN search" id="idSearch">Search</a></div>
+                        <div class="col-2"><a class="btnWAN search" id="idSearchBook">Search</a></div>
                     </div>
                 </form>
 

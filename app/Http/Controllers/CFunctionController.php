@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -48,6 +49,27 @@ class CFunctionController extends Controller
             ]);
         }
 
+    }
+
+    public function getAllSemester(Request $request)
+    {
+        try {
+            $oSemester = Semester::where("status", 1)
+                                 ->where("deleted", 0)
+                                 ->get();
+        } catch (\Exception $e) {
+            echo $e;die;
+            return response()->json([
+                'message' => 'Internal server error occurred.',
+                'status_code' => 500
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'OK',
+            'data' => $oSemester,
+            'status_code' => 200
+        ], 200);
     }
 
 }
