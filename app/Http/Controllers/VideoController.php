@@ -95,14 +95,12 @@ class VideoController extends Controller
             $timestamp = now()->format('Ymd_His'); // Format: YYYYMMDD_HHMMSS
 
             // Store chunks in temp directory
-            $tempDir = storage_path("app/public/videos/temp/");
+            $tempDir = Storage::disk('public')->path('videos/temp');
             if (!file_exists($tempDir)) {
                 mkdir($tempDir, 0777, true);
             }
 
-            $chunkPath = "{$tempDir}{$originalFilename}.part{$chunkIndex}";
-
-            // ✅ Use move() instead of file_put_contents()
+            $chunkPath = "{$tempDir}/{$originalFilename}.part{$chunkIndex}";
             $file->move($tempDir, "{$originalFilename}.part{$chunkIndex}");
 
             // ✅ Ensure file is saved before reading
@@ -114,7 +112,7 @@ class VideoController extends Controller
             // Check if all chunks are uploaded
             if ($chunkIndex + 1 == $totalChunks) {
                 $finalFilename = "{$originalFilename}_{$timestamp}.mp4";
-                $finalPath = storage_path("app/public/videos/{$finalFilename}");
+                $finalPath = Storage::disk('public')->path("videos/{$finalFilename}");
                 $output = fopen($finalPath, 'wb');
 
                 for ($i = 0; $i < $totalChunks; $i++) {
