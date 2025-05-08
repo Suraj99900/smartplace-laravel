@@ -235,11 +235,11 @@ Route::get('videos/videos-player/{videoId}', function () {
 Route::get('home-video', function () {
     $sessionData = Session::all(); // Retrieve all session data
 
-    if ((new SessionManager())->isLoggedIn()) {
+    // if ((new SessionManager())->isLoggedIn()) {
         return view('home-video')->with('sessionData', $sessionData);
-    } else {
-        return view('login');
-    }
+    // } else {
+        // return view('login');
+    // }
 });
 
 
