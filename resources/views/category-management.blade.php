@@ -1,5 +1,5 @@
 @include('CDN_Header')
-@include('navbar')
+@include('NavBar')
 
 <div class="main-content">
     <section class="service section" id="service">
