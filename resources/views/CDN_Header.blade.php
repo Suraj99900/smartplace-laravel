@@ -33,16 +33,6 @@
     <meta name="twitter:site" content="@yourhandle"> <!-- Optional: Replace with your Twitter -->
 
 
-    <script src="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css" rel="stylesheet">
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.min.js"
-        integrity="sha512-EuEgpjZ307chaYi/ZWSMqoYbBFtlxY76b8q0UX8HAMThmGNrQ43y09w5DQE9q97FWjDSx2TISsIQcz6utqolRw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.css"
-        integrity="sha512-eNi58fWX0irIyO5I5CgiimkK92f9B0wAbAx1R4j7h2RbE7/CvoQzmIoiqFvxTPsyE2qT2SP5MWHQEAYE28eIQQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CDNS -->
     <!-- Bootstrap 5 link -->
@@ -60,7 +50,21 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" />
 
+
+    <script src="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css" rel="stylesheet">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.min.js"
+        integrity="sha512-EuEgpjZ307chaYi/ZWSMqoYbBFtlxY76b8q0UX8HAMThmGNrQ43y09w5DQE9q97FWjDSx2TISsIQcz6utqolRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.css"
+        integrity="sha512-eNi58fWX0irIyO5I5CgiimkK92f9B0wAbAx1R4j7h2RbE7/CvoQzmIoiqFvxTPsyE2qT2SP5MWHQEAYE28eIQQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Counter visitor -->
     <!-- ICONSCOUT CDN -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -72,7 +76,7 @@
     <link rel="stylesheet" href="{{asset('css/variables5.css')}}" class="alternate-style" title="color-5" disabled>
     <link rel="stylesheet" href="{{asset('css/style-switcher.css')}}">
     <link rel="stylesheet" href="{{asset('css/nav-style.css')}}">
-    <title>Smartpoly</title>
+
 </head>
 
 <body class="dark">
