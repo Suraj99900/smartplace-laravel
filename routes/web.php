@@ -3,6 +3,7 @@ use App\Http\Controllers\AIDSBookIssueController;
 use App\Http\Controllers\AidsBookManageController;
 use App\Http\Controllers\AIDSSturntInfoController;
 use App\Http\Controllers\AIDSUploadController;
+use App\Http\Controllers\AttachmentFileController;
 use App\Http\Controllers\ClassRoomController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\MasterFolderController;
@@ -11,12 +12,16 @@ use App\Http\Controllers\SessionManagerController;
 use App\Http\Controllers\SubFolderController;
 use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\UploadFileController;
+use App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\UserController;
 use App\Models\SessionManager;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CFunctionController;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\VideoCategoryController;
+use App\Http\Controllers\VideoController;
+
 Route::get('/', function () {
     return view('MyPortfolio');
 });
@@ -203,3 +208,70 @@ Route::controller(ExcelController::class)->group(function () {
     Route::post('export-students', 'exportStudents');
     Route::post('import-students', 'importStudents');
 });
+
+
+Route::get('/video-management', [VideoController::class, 'index']);
+
+Route::get('/category-management', [VideoCategoryController::class, 'index']);
+
+
+
+Route::get('videos/{categoryId?}', function () {
+    $sessionManager = (new SessionManager());
+    $categoryId = request()->route('categoryId');
+    $userType = $sessionManager->iUserID;
+
+    return view('video-list', compact('categoryId', 'userType'));
+});
+
+
+Route::get('videos/videos-player/{videoId}', function () {
+    $videoId = request()->route('videoId');
+
+    return view('video-player', compact('videoId'));
+});
+
+
+Route::get('home-video', function () {
+    $sessionData = Session::all(); // Retrieve all session data
+
+    if ((new SessionManager())->isLoggedIn()) {
+        return view('home-video')->with('sessionData', $sessionData);
+    } else {
+        return view('login');
+    }
+});
+
+
+// Video upload
+Route::post('video', [VideoController::class, 'upload']);
+Route::post('uploadChunk', [VideoController::class, 'uploadChunk']);
+Route::get('video/{id}', [VideoController::class, 'fetchById']);
+Route::get('videos-all', [VideoController::class, 'fetchAll']);
+Route::get('videos-category/{id}', [VideoController::class, 'fetchAllVideoDataByCategoryId']);
+Route::get('videos/paginated', [VideoController::class, 'fetchAllWithPagination']);
+Route::get('videos/search', [VideoController::class, 'searchByTitle']);
+Route::put('video/{id}', [VideoController::class, 'update']);
+Route::delete('video/{id}', [VideoController::class, 'destroy']);
+Route::get('stream/{id}', [VideoController::class, 'stream']);
+Route::get('thumbnail/{id}', [VideoController::class, 'thumbnailImages']);
+
+// Video Category
+Route::post('video-category', [VideoCategoryController::class, 'addCategory']);
+Route::get('video-categories', [VideoCategoryController::class, 'getAllCategories']);
+Route::get('video-categories/{userId}/user', [VideoCategoryController::class, 'getUserCategoryAccess']);
+Route::get('video-category/{id}', [VideoCategoryController::class, 'getCategoryById']);
+Route::put('video-category/{id}', [VideoCategoryController::class, 'updateCategory']);
+Route::delete('video-category/{id}', [VideoCategoryController::class, 'deleteCategory']);
+
+// Attachment route
+Route::post('app-attachment', [AttachmentFileController::class, 'addAttchmentData']);
+Route::get('video/app-attachment/{id}', [AttachmentFileController::class, 'fetchAllAttachmentDataByVideoId']);
+Route::delete('app-attachment/{id}', [AttachmentFileController::class, 'removedAttchment']);
+
+// Video Comment 
+Route::post('video/comment', [UserCommentController::class, 'addUserComment']);
+Route::put('video/comment', [UserCommentController::class, 'updateUserComment']);
+Route::get('video/comment/{id}', [UserCommentController::class, 'fetchUserCommentByVideoId']);
+Route::get('video/comment', [UserCommentController::class, 'fetchAllUserComment']);
+Route::delete('video/comment/{id}', [UserCommentController::class, 'invalidUserCommentById']);

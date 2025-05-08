@@ -28,15 +28,35 @@
                 <aside>
                     <ul>
                         <li>
-                            <a href="userDashboard" class="transparent-card p-3 mb-5 rounded "><i
-                                    class="fa-regular fa-id-card"></i>
+                            <a href="userDashboard" class="transparent-card p-3 mb-5 rounded active"><i
+                                    class="fa fa-user-circle  me-3 text-primary"></i>
                                 <h5>Personal Info</h5>
                             </a>
                         </li>
                         <li>
-                            <a href="BlogManage?iActive=3" class="transparent-card p-3 mb-5 rounded active"><i
-                                    class="fa-solid fa-blog"></i>
+                            <a href="BlogManage" class="transparent-card p-3 mb-5 rounded"><i
+                                    class="fa fa-blog  me-3 text-success"></i>
                                 <h5>Blog</h5>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="folderManagement" class="transparent-card p-3 mb-5 rounded"><i
+                                    class="fa fa-folder-open  me-3 text-warning"></i>
+                                <h5>Folder Management</h5>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="category-management" class="transparent-card p-3 mb-5 rounded"><i
+                                    class="fa fa-tags  me-3 text-info"></i>
+                                <h5>Manage video categories</h5>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="video-management" class="transparent-card p-3 mb-5 rounded"><i
+                                    class="fa fa-film  me-3 text-danger"></i>
+                                <h5>Manage uploaded videos</h5>
                             </a>
                         </li>
 

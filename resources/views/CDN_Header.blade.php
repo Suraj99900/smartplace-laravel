@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Title -->
-    <title>Smart Place || Showcasing Expertise and Insights</title>
+    <title>Freecode.fun | Portfolio, Blogs, PHP Development, and Tutorials</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{asset('img/DashboardNewImage-transparent.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('img/DashboardNewImage-transparent.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/DashboardNewImage-transparent.png') }}" type="image/png">
 
     <!-- SEO Meta Tags -->
-    <meta name="description"
-        content="Explore my portfolio showcasing expertise, insights, and skills in [your specialties]. Dive into my blog for valuable insights, tutorials, and industry updates.">
-    <meta name="keywords"
-        content="portfolio, blogging, personal branding, [specific skills], [industry topics],PHP,Development, career growth, insights, tutorials">
+    <meta name="description" content="Showcase your PHP development skills, explore insightful blogs, and discover projects on Freecode.fun — a portfolio of tech expertise, tutorials, and innovations.">
+    <meta name="keywords" content="portfolio, blog, PHP developer, Laravel, web development, coding tutorials, full stack developer, backend development, software engineer, programming insights">
+    <meta name="author" content="Suraj Jaiswal (freecode.fun)">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://smartpoly.myportfolio.com">
+    <link rel="canonical" href="https://freecode.fun/">
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Smart Place - Showcasing Expertise and Insights">
-    <meta property="og:description"
-        content="A portfolio that highlights skills and insights, along with a blog featuring tutorials and industry trends.">
-    <meta property="og:image" content="{{asset('img/PortfolioIcon.png')}}">
-    <meta property="og:url" content="https://smartpoly.myportfolio.com">
+    <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
+    <meta property="og:title" content="Freecode.fun | Portfolio & Tech Blog">
+    <meta property="og:description" content="Explore my personal portfolio and blog for development tutorials, industry insights, and featured PHP projects.">
+    <meta property="og:image" content="{{ asset('img/PortfolioIcon.png') }}">
+    <meta property="og:url" content="https://freecode.fun/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Freecode.fun">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Smart Place - Portfolio & Blog">
-    <meta name="twitter:description"
-        content="Explore my portfolio and read my blog for the latest tutorials and insights in [industry].">
-    <meta name="twitter:image" content="{{asset('img/DashboardNewImage-transparent.png')}}">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="twitter:title" content="Freecode.fun | Dev Portfolio & Blog">
+    <meta name="twitter:description" content="Discover tutorials, insights, and development projects at Freecode.fun — a portfolio and blog for modern web developers.">
+    <meta name="twitter:image" content="{{ asset('img/DashboardNewImage-transparent.png') }}">
+    <meta name="twitter:site" content="@yourhandle"> <!-- Optional: Replace with your Twitter -->
 
     <!-- CDNS -->
     <!-- Bootstrap 5 link -->
