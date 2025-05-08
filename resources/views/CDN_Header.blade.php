@@ -32,6 +32,18 @@
     <meta name="twitter:image" content="{{ asset('img/DashboardNewImage-transparent.png') }}">
     <meta name="twitter:site" content="@yourhandle"> <!-- Optional: Replace with your Twitter -->
 
+
+    <script src="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css" rel="stylesheet">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.min.js"
+        integrity="sha512-EuEgpjZ307chaYi/ZWSMqoYbBFtlxY76b8q0UX8HAMThmGNrQ43y09w5DQE9q97FWjDSx2TISsIQcz6utqolRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.css"
+        integrity="sha512-eNi58fWX0irIyO5I5CgiimkK92f9B0wAbAx1R4j7h2RbE7/CvoQzmIoiqFvxTPsyE2qT2SP5MWHQEAYE28eIQQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- CDNS -->
     <!-- Bootstrap 5 link -->
     <link rel="stylesheet" href="{{ asset('css/cdn.jsdelivr.net_npm_bootstrap@5.3.2_dist_css_bootstrap.min.css')}}">
