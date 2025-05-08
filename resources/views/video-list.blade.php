@@ -1,5 +1,5 @@
 @include('CDN_Header')
-@include('navbar')
+@include('NavBar')
 
 <style>
   /* Card hover scale & box-shadow effect */

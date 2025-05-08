@@ -1,5 +1,5 @@
 @include('CDN_Header')
-@include('navbar')
+@include('NavBar')
 @php
     $sessionManager = new \App\Models\SessionManager();
     $iUserId = $sessionManager->iUserID;
