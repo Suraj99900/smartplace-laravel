@@ -82,49 +82,55 @@ class VideoController extends Controller
                 'filename' => 'required|string',
                 'thumbnail' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:5048'
             ]);
-
+    
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
-
-            // Get request data
-            $file = $request->file('video');
-            $chunkIndex = $request->input('chunk_index');
-            $totalChunks = $request->input('total_chunks');
-            $originalFilename = pathinfo($request->input('filename'), PATHINFO_FILENAME);
-            $timestamp = now()->format('Ymd_His'); // Format: YYYYMMDD_HHMMSS
-
-            // Store chunks in temp directory
+    
+            $chunkIndex = (int) $request->input('chunk_index');
+            $totalChunks = (int) $request->input('total_chunks');
+    
+            // Sanitize filename
+            $originalFilename = preg_replace('/[^A-Za-z0-9_\-]/', '_', pathinfo($request->input('filename'), PATHINFO_FILENAME));
+            $timestamp = now()->format('Ymd_His');
+    
+            // Define temp directory path for chunks
             $tempDir = Storage::disk('public')->path('videos/temp');
             if (!file_exists($tempDir)) {
                 mkdir($tempDir, 0777, true);
             }
-
-            $chunkPath = "{$tempDir}/{$originalFilename}.part{$chunkIndex}";
-            $file->move($tempDir, "{$originalFilename}.part{$chunkIndex}");
-
-            // ✅ Ensure file is saved before reading
-            sleep(1);
+    
+            // Save the chunk to disk
+            $chunkFileName = "{$originalFilename}.part{$chunkIndex}";
+            $chunkPath = rtrim($tempDir, '/') . '/' . $chunkFileName;
+            $request->file('video')->move($tempDir, $chunkFileName);
+    
+            // Verify chunk is saved
             if (!file_exists($chunkPath)) {
-                return response()->json(['error' => "Chunk file not found: $chunkPath"], 500);
+                return response()->json(['error' => "Chunk file not found: {$chunkPath}"], 500);
             }
-
-            // Check if all chunks are uploaded
-            if ($chunkIndex + 1 == $totalChunks) {
+    
+            // If all chunks are uploaded, merge them
+            if ($chunkIndex + 1 === $totalChunks) {
                 $finalFilename = "{$originalFilename}_{$timestamp}.mp4";
                 $finalPath = Storage::disk('public')->path("videos/{$finalFilename}");
                 $output = fopen($finalPath, 'wb');
-
+    
                 for ($i = 0; $i < $totalChunks; $i++) {
-                    $chunkFile = "{$tempDir}{$originalFilename}.part{$i}";
+                    $chunkFile = rtrim($tempDir, '/') . '/' . "{$originalFilename}.part{$i}";
+                    if (!file_exists($chunkFile)) {
+                        fclose($output);
+                        return response()->json(['error' => "Missing chunk file: {$chunkFile}"], 500);
+                    }
                     fwrite($output, file_get_contents($chunkFile));
-                    unlink($chunkFile); // Remove processed chunk
+                    unlink($chunkFile); // Cleanup
                 }
+    
                 fclose($output);
-
+    
                 // Store thumbnail
                 $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-
+    
                 // Save to database
                 $video = Video::create([
                     'category_id' => $request->input('category_id'),
@@ -135,21 +141,20 @@ class VideoController extends Controller
                     'is_converted_hls_video' => false,
                     'thumbnail' => $thumbnailPath,
                 ]);
-
-                // Dispatch background job for HLS conversion
-                // dispatch(new ConvertVideoToHLS($video));   ##  off due to overload 
-
+    
+                // dispatch(new ConvertVideoToHLS($video)); // optional
+    
                 return response()->json([
-                    'message' => "Video uploaded successfully! HLS conversion in progress.",
+                    'message' => "Video uploaded successfully!",
                     'video' => $video,
                 ], 200);
             }
-
+    
             return response()->json(['message' => 'Chunk uploaded successfully.'], 200);
         } catch (Exception $e) {
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
-    }
+    }    
 
 
 
